@@ -1,4 +1,4 @@
-<%= form_for @topic, :html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for @topic, url: user_topic_path(current_user, @topic),  html: { class: 'form-horizontal' } do |f| %>
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
     <div class="controls">
@@ -11,16 +11,10 @@
       <%= f.text_field :description, :class => 'text_field' %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label :user_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :user_id, :class => 'text_field' %>
-    </div>
-  </div>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                topics_path, :class => 'btn' %>
+                user_topics_path(current_user), :class => 'btn' %>
   </div>
 <% end %>

@@ -50,6 +50,7 @@
           <div class="container nav-collapse">
             <ul class="nav">
               <li><%= link_to t(".title", default: User.model_name.human.titleize), user_path(current_user) %></li>
+              <li><%= link_to t(".title", default: Topic.model_name.human.titleize), user_topics_path(current_user) %></li>
               <li><%= link_to t(".title", default: t("helpers.title.logout")), controller: :sessions, action: :destroy %></li>
             </ul>
           </div><!--/.nav-collapse -->
