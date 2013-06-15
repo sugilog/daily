@@ -3,9 +3,11 @@
 one:
   name:  user1
   email: user1@gmail.com
-  password_digest: MyString
+  # password
+  password_digest: "$2a$10$8h1g3qx1iQoH2mnULKdcduzoohh55HTtDI7HUSPu0.C4hrVpB3J9W"
 
 two:
   name: user2
   email: user2@gmail.com
-  password_digest: MyString
+  # password
+  password_digest: "$2a$10$8h1g3qx1iQoH2mnULKdcduzoohh55HTtDI7HUSPu0.C4hrVpB3J9W"
