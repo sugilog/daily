@@ -12,32 +12,59 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, user: { email: @user.email, name: @user.name, password_digest: @user.password_digest }
+      post :create, user: { email: "user3@gmail.com", name: "user3", password: "password", password_confirmation: "password" }
     end
 
     assert_redirected_to user_path(assigns(:user))
+  end
+
+  test "should create with invalid params" do
+    assert_no_difference('User.count') do
+      post :create, user: { email: "user3@gmail.com", name: "user3", password_digest: "password" }
+    end
+
+    assert_response :success
+    assert_template :new
+
+    assert_no_difference('User.count') do
+      post :create, user: { email: @user.email, name: "user3", password: "password", password_confirmation: "password" }
+    end
+
+    assert_response :success
+    assert_template :new
   end
 
   test "should show user" do
-    get :show, id: @user
-    assert_response :success
-  end
+    @request.session[:user_id] = @user.id
 
-  test "should get edit" do
-    get :edit, id: @user
+    get :show
     assert_response :success
-  end
-
-  test "should update user" do
-    patch :update, id: @user, user: { email: @user.email, name: @user.name, password_digest: @user.password_digest }
-    assert_redirected_to user_path(assigns(:user))
   end
 
   test "should destroy user" do
+    @request.session[:user_id] = @user.id
+
     assert_difference('User.count', -1) do
-      delete :destroy, id: @user
+      delete :destroy
     end
 
-    assert_redirected_to users_path
+    assert_redirected_to controller: :sessions, action: :destroy
+  end
+
+  test "should not show user unless login" do
+    @request.session[:user_id] = nil
+
+    get :show
+    assert_redirected_to root_path
+  end
+
+  test "should not destroy user unless login" do
+    @request.session[:user_id] = nil
+
+    assert_no_difference('User.count') do
+      delete :destroy
+    end
+
+    assert_redirected_to root_path
   end
 end
