@@ -37,6 +37,7 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.0)
     atomic (1.1.9)
+    bcrypt-ruby (3.0.1)
     builder (3.1.4)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
@@ -45,6 +46,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.2)
+    commonjs (0.2.6)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -57,6 +59,8 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.0)
+    less (2.3.2)
+      commonjs (~> 0.2.6)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -119,9 +123,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby (~> 3.0.1)
   coffee-rails (~> 4.0.0)
   jbuilder (~> 1.2)
   jquery-rails
+  less (~> 2.3.2)
   rails (= 4.0.0.rc2)
   sass-rails (~> 4.0.0.rc2)
   sdoc
