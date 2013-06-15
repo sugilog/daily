@@ -61,6 +61,9 @@ GEM
     json (1.8.0)
     less (2.3.2)
       commonjs (~> 0.2.6)
+    less-rails (2.3.3)
+      actionpack (>= 3.1)
+      less (~> 2.3.1)
     libv8 (3.11.8.17)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -132,7 +135,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   jbuilder (~> 1.2)
   jquery-rails
-  less (~> 2.3.2)
+  less-rails (~> 2.3.3)
   rails (= 4.0.0.rc2)
   sass-rails (~> 4.0.0.rc2)
   sdoc
