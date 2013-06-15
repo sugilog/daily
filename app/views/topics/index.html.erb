@@ -10,7 +10,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:title) %></th>
       <th><%= model_class.human_attribute_name(:description) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
@@ -20,7 +19,6 @@
   <tbody>
     <% @topics.each do |topic| %>
       <tr>
-        <td><%= link_to topic.id, user_topic_path(current_user, topic) %></td>
         <td><%= link_to topic.title, user_topic_path(current_user, topic) %></td>
         <td><%= topic.description %></td>
         <td><%=l topic.created_at %></td>
