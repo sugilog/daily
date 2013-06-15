@@ -14,17 +14,17 @@
 ActiveRecord::Schema.define(version: 20130615132459) do
 
   create_table "topics", force: true do |t|
-    t.string   "title"
+    t.string   "title",       null: false
     t.text     "description"
-    t.integer  "user_id"
+    t.integer  "user_id",     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password_digest"
+    t.string   "name",            null: false
+    t.string   "email",           null: false
+    t.string   "password_digest", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
