@@ -19,5 +19,8 @@
 
   <div class="form-actions">
     <%= submit_tag "Log in", :class => 'btn btn-primary' %>
+    <%= link_to t('.title', default: [:'helpers.titles.new', 'New %{model}'], model: model_class.model_name.human.titleize),
+                new_user_path,
+                class: 'btn' %>
   </div>
 <% end %>
