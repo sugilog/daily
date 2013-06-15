@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def new
     if current_user
-      redirect_to user_path(current_user)
+      redirect_to user_topics_path(current_user)
     end
   end
 
@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     user = User.where(email: params[:email]).first
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to user_path(user), notice: "Logged in!"
+      redirect_to user_topics_path(user), notice: "Logged in!"
     else
       flash.now.alert = "Invalid email or password"
       render :new

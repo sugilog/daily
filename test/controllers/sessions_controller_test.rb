@@ -19,7 +19,7 @@ class SessionsControllerTest < ActionController::TestCase
     @request.session[:user_id] = @user.id
 
     get :new
-    assert_redirected_to user_path(@user)
+    assert_redirected_to user_topics_path(@user)
 
     assert_equal @user.id, @request.session[:user_id]
   end
@@ -28,7 +28,7 @@ class SessionsControllerTest < ActionController::TestCase
     @request.session[:user_id] = nil
 
     post :create, email: @user.email, password: "password"
-    assert_redirected_to user_path(@user)
+    assert_redirected_to user_topics_path(@user)
 
     assert_equal @user.id, @request.session[:user_id]
   end
