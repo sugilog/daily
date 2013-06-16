@@ -19,19 +19,19 @@
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
+  var chartData = <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| [date.mday, dailylog.score.to_i] } ).to_json %>;
+</script>
+<script type="text/javascript">
   google.load("visualization", "1", {packages:["corechart"]});
+  function drawChart(_data) {
+    var data = google.visualization.arrayToDataTable(_data);
+    var chart = new google.visualization.LineChart(jQuery("#chart_div").get(0));
+    chart.draw(data);
+  }
   google.setOnLoadCallback(function() {
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable(
-        <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| [date.mday, dailylog.score.to_i] } ).to_json %>
-      );
-
-      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-      chart.draw(data);
-    }
-
-    drawChart();
-    jQuery(window).on("resize", drawChart);
+    drawChart(chartData);
+    jQuery(window).on("resize", function() { drawChart(chartData); });
+    jQuery(document).on("page:load", function() { drawChart(chartData); });
   });
 </script>
 <div class="row">
@@ -41,12 +41,12 @@
 
 <ul class="pager">
   <li class="previous">
-  <%= link_to_without_turbolink user_topic_dailylogs_path(current_user, @topic, year: start_date.prev_month.year, month: start_date.prev_month.month) do %>
+  <%= link_to user_topic_dailylogs_path(current_user, @topic, year: start_date.prev_month.year, month: start_date.prev_month.month) do %>
     &larr; Previous
   <% end %>
   </li>
   <li class="next">
-  <%= link_to_without_turbolink user_topic_dailylogs_path(current_user, @topic, year: start_date.next_month.year, month: start_date.next_month.month) do %>
+  <%= link_to user_topic_dailylogs_path(current_user, @topic, year: start_date.next_month.year, month: start_date.next_month.month) do %>
     Next &rarr;
   <% end %>
   </li>
@@ -61,7 +61,7 @@
   %>
   <li>
   <%= link_to link_path do %>
-    <%= date.mday %>
+    <%=l date %>
     <%= content_tag :span, dailylog.score, class: "badge" %>
     <% if dailylog.memo.present? %>
       (<%= content_tag :small, (dailylog.memo) %>)
@@ -73,12 +73,12 @@
 
 <ul class="pager">
   <li class="previous">
-  <%= link_to_without_turbolink user_topic_dailylogs_path(current_user, @topic, year: start_date.prev_month.year, month: start_date.prev_month.month) do %>
+  <%= link_to user_topic_dailylogs_path(current_user, @topic, year: start_date.prev_month.year, month: start_date.prev_month.month) do %>
     &larr; Previous
   <% end %>
   </li>
   <li class="next">
-  <%= link_to_without_turbolink user_topic_dailylogs_path(current_user, @topic, year: start_date.next_month.year, month: start_date.next_month.month) do %>
+  <%= link_to user_topic_dailylogs_path(current_user, @topic, year: start_date.next_month.year, month: start_date.next_month.month) do %>
     Next &rarr;
   <% end %>
   </li>
