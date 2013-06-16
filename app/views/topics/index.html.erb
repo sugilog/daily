@@ -19,12 +19,17 @@
   <tbody>
     <% @topics.each do |topic| %>
       <tr>
-        <td><%= link_to topic.title, user_topic_path(current_user, topic) %></td>
+        <td><%= link_to topic.title, '#FIXME' %></td>
         <td><%= topic.description %></td>
         <td><%=l topic.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_user_topic_path(current_user, topic), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      user_topic_path(current_user, topic),
+                      :method => 'delete',
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-danger' %>
         </td>
       </tr>
     <% end %>

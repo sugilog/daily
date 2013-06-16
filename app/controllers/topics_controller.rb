@@ -1,12 +1,9 @@
 class TopicsController < ApplicationController
   before_action :login_user?
-  before_action :set_topic, only: [:show, :edit, :update, :destroy]
+  before_action :set_topic, only: [:edit, :update, :destroy]
 
   def index
     @topics = current_user.topics
-  end
-
-  def show
   end
 
   def new
@@ -20,7 +17,7 @@ class TopicsController < ApplicationController
     @topic = current_user.topics.new(topic_params)
 
     if @topic.save
-      redirect_to user_topic_path(current_user, @topic), notice: 'Topic was successfully created.'
+      redirect_to user_topics_path(current_user), notice: 'Topic was successfully created.'
     else
       render action: 'new'
     end
@@ -28,7 +25,7 @@ class TopicsController < ApplicationController
 
   def update
     if @topic.update(topic_params)
-      redirect_to user_topic_path(current_user, @topic), notice: 'Topic was successfully updated.'
+      redirect_to user_topics_path(current_user), notice: 'Topic was successfully updated.'
     else
       render action: 'edit'
     end
@@ -36,7 +33,7 @@ class TopicsController < ApplicationController
 
   def destroy
     @topic.destroy
-    redirect_to users_topics(current_user)
+    redirect_to user_topics_path(current_user)
   end
 
   private

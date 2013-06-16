@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
+  id: 1
   title:       Topic1
   description: MyText
   user_id: 1
 
 two:
+  id: 2
   title:       Topic2
   description: MyText
   user_id: 1
