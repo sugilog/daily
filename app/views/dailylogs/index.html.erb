@@ -20,15 +20,19 @@
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
   google.load("visualization", "1", {packages:["corechart"]});
-  google.setOnLoadCallback(drawChart);
-  function drawChart() {
-    var data = google.visualization.arrayToDataTable(
-      <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| [date.mday, dailylog.score.to_i] } ).to_json %>
-    );
+  google.setOnLoadCallback(function() {
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable(
+        <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| [date.mday, dailylog.score.to_i] } ).to_json %>
+      );
 
-    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-    chart.draw(data);
-  }
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data);
+    }
+
+    drawChart();
+    jQuery(window).on("resize", drawChart);
+  });
 </script>
 <div class="row">
 <div id="chart_div" class="span12" style="height: 300px;"></div>
