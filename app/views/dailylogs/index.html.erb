@@ -16,12 +16,7 @@
             :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
             :class => 'btn btn-danger' %>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
-  var chartData = <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| [date.mday, dailylog.score.to_i] } ).to_json %>;
-</script>
-<script type="text/javascript">
-  google.load("visualization", "1", {packages:["corechart"]});
   function drawChart(_data) {
     var data = google.visualization.arrayToDataTable(_data);
     var chart = new google.visualization.LineChart(jQuery("#chart_div").get(0));
@@ -29,9 +24,12 @@
   }
   google.setOnLoadCallback(function() {
     drawChart(chartData);
-    jQuery(window).on("resize", function() { drawChart(chartData); });
-    jQuery(document).on("page:load", function() { drawChart(chartData); });
   });
+  jQuery(window).on("resize", function() { drawChart(chartData); });
+  jQuery(document).on("page:load", function() { drawChart(chartData); });
+</script>
+<script type="text/javascript">
+  var chartData = <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| [date.mday, dailylog.score.to_i] } ).to_json %>;
 </script>
 <div class="row">
 <div id="chart_div" class="span12" style="height: 200px;"></div>
