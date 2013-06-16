@@ -1,0 +1,33 @@
+<h1>Listing dailylogs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Logged on</th>
+      <th>Score</th>
+      <th>Node</th>
+      <th>Topic</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dailylogs.each do |dailylog| %>
+      <tr>
+        <td><%= dailylog.logged_on %></td>
+        <td><%= dailylog.score %></td>
+        <td><%= dailylog.node %></td>
+        <td><%= dailylog.topic_id %></td>
+        <td><%= link_to 'Show', dailylog %></td>
+        <td><%= link_to 'Edit', edit_dailylog_path(dailylog) %></td>
+        <td><%= link_to 'Destroy', dailylog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Dailylog', new_dailylog_path %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  logged_on: 2013-06-16
+  score: 1
+  node: MyText
+  topic_id: 1
+
+two:
+  logged_on: 2013-06-16
+  score: 1
+  node: MyText
+  topic_id: 1

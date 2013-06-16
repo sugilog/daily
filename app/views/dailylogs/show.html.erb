@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Logged on:</strong>
+  <%= @dailylog.logged_on %>
+</p>
+
+<p>
+  <strong>Score:</strong>
+  <%= @dailylog.score %>
+</p>
+
+<p>
+  <strong>Node:</strong>
+  <%= @dailylog.node %>
+</p>
+
+<p>
+  <strong>Topic:</strong>
+  <%= @dailylog.topic_id %>
+</p>
+
+<%= link_to 'Edit', edit_dailylog_path(@dailylog) %> |
+<%= link_to 'Back', dailylogs_path %>
