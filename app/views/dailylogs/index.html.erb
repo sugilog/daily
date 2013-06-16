@@ -1,33 +1,42 @@
-<h1>Listing dailylogs</h1>
-
-<table>
+<%- model_class = Dailylog -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Logged on</th>
-      <th>Score</th>
-      <th>Node</th>
-      <th>Topic</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:logged_on) %></th>
+      <th><%= model_class.human_attribute_name(:score) %></th>
+      <th><%= model_class.human_attribute_name(:memo) %></th>
+      <th><%= model_class.human_attribute_name(:topic_id) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @dailylogs.each do |dailylog| %>
       <tr>
+        <td><%= link_to dailylog.id, dailylog_path(dailylog) %></td>
         <td><%= dailylog.logged_on %></td>
         <td><%= dailylog.score %></td>
         <td><%= dailylog.memo %></td>
         <td><%= dailylog.topic_id %></td>
-        <td><%= link_to 'Show', dailylog %></td>
-        <td><%= link_to 'Edit', edit_dailylog_path(dailylog) %></td>
-        <td><%= link_to 'Destroy', dailylog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l dailylog.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_dailylog_path(dailylog), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      dailylog_path(dailylog),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Dailylog', new_dailylog_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_dailylog_path,
+            :class => 'btn btn-primary' %>

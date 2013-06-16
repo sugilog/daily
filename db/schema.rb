@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130615132459) do
+ActiveRecord::Schema.define(version: 20130616015955) do
+
+  create_table "dailylogs", force: true do |t|
+    t.date     "logged_on",  null: false
+    t.integer  "score"
+    t.text     "memo"
+    t.integer  "topic_id",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dailylogs", ["topic_id", "logged_on"], name: "index_dailylogs_on_topic_id_and_logged_on", unique: true
 
   create_table "topics", force: true do |t|
     t.string   "title",       null: false
