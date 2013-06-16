@@ -43,6 +43,7 @@
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </a>
           <% end %>
           <a class="brand" href="#">Daily</a>
@@ -61,24 +62,10 @@
 
     <div class="container">
         <div class="row">
-          <%# <div class="span9"> %>
           <div class="span12">
             <%= bootstrap_flash %>
             <%= yield %>
           </div>
-
-          <%# XXX: if side bar need for UX, uncomment and add item %>
-          <%# <% if current_user %1> %>
-          <%# <div class="span3"> %>
-          <%#   <div class="well sidebar-nav"> %>
-          <%#     <h3>Sidebar</h3> %>
-          <%#     <ul class="nav nav-list"> %>
-          <%#       <li><%= link_to t(".title", default: User.model_name.human.titleize), user_path(current_user) %1></li> %>
-          <%#       <li><%= link_to t(".title", default: t("helpers.title.logout")), controller: :sessions, action: :destroy %1></li> %>
-          <%#     </ul> %>
-          <%#   </div><!--/.well --> %>
-          <%# </div><!--/span--> %>
-          <%# <% end %1> %>
         </div><!--/row-->
 
       <footer>
