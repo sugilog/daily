@@ -18,7 +18,7 @@ class DailylogsControllerTest < ActionController::TestCase
 
   test "should create dailylog" do
     assert_difference('Dailylog.count') do
-      post :create, dailylog: { logged_on: @dailylog.logged_on, node: @dailylog.node, score: @dailylog.score, topic_id: @dailylog.topic_id }
+      post :create, dailylog: { logged_on: @dailylog.logged_on, memo: @dailylog.memo, score: @dailylog.score, topic_id: @dailylog.topic_id }
     end
 
     assert_redirected_to dailylog_path(assigns(:dailylog))
@@ -35,7 +35,7 @@ class DailylogsControllerTest < ActionController::TestCase
   end
 
   test "should update dailylog" do
-    patch :update, id: @dailylog, dailylog: { logged_on: @dailylog.logged_on, node: @dailylog.node, score: @dailylog.score, topic_id: @dailylog.topic_id }
+    patch :update, id: @dailylog, dailylog: { logged_on: @dailylog.logged_on, memo: @dailylog.memo, score: @dailylog.score, topic_id: @dailylog.topic_id }
     assert_redirected_to dailylog_path(assigns(:dailylog))
   end
 

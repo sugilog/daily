@@ -69,6 +69,6 @@ class DailylogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def dailylog_params
-      params.require(:dailylog).permit(:logged_on, :score, :node, :topic_id)
+      params.require(:dailylog).permit(:logged_on, :score, :memo, :topic_id)
     end
 end

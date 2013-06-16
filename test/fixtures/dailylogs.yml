@@ -3,11 +3,11 @@
 one:
   logged_on: 2013-06-16
   score: 1
-  node: MyText
+  memo: MyText
   topic_id: 1
 
 two:
   logged_on: 2013-06-16
   score: 1
-  node: MyText
+  memo: MyText
   topic_id: 1
