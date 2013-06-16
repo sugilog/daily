@@ -2,48 +2,37 @@ require 'test_helper'
 
 class DailylogsControllerTest < ActionController::TestCase
   setup do
+    @user = users(:one)
+    @topic = topics(:one)
     @dailylog = dailylogs(:one)
+    @request.session[:user_id] = @user.id
   end
 
   test "should get index" do
-    get :index
+    get :index, topic_id: @topic
     assert_response :success
+    assert_not_nil assigns(:topic)
     assert_not_nil assigns(:dailylogs)
   end
 
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
+  test "should get index with invalid conmbination of user and topic" do
+    another_user = users(:two)
+    @request.session[:user_id] = another_user.id
 
-  test "should create dailylog" do
-    assert_difference('Dailylog.count') do
-      post :create, dailylog: { logged_on: @dailylog.logged_on, memo: @dailylog.memo, score: @dailylog.score, topic_id: @dailylog.topic_id }
+    assert_raise(ActiveRecord::RecordNotFound) do
+      get :index, topic_id: @topic
     end
-
-    assert_redirected_to dailylog_path(assigns(:dailylog))
   end
 
-  test "should show dailylog" do
-    get :show, id: @dailylog
-    assert_response :success
+  test "should get index without session" do
+    @request.session[:user_id] = nil
+    get :index, topic_id: @topic
+    assert_redirected_to root_path
   end
 
-  test "should get edit" do
-    get :edit, id: @dailylog
-    assert_response :success
-  end
-
-  test "should update dailylog" do
-    patch :update, id: @dailylog, dailylog: { logged_on: @dailylog.logged_on, memo: @dailylog.memo, score: @dailylog.score, topic_id: @dailylog.topic_id }
-    assert_redirected_to dailylog_path(assigns(:dailylog))
-  end
-
-  test "should destroy dailylog" do
-    assert_difference('Dailylog.count', -1) do
-      delete :destroy, id: @dailylog
+  test "should get index without topic_id" do
+    assert_raise(ActiveRecord::RecordNotFound) do
+      get :index
     end
-
-    assert_redirected_to dailylogs_path
   end
 end

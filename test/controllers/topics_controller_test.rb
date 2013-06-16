@@ -1,5 +1,3 @@
-require 'test_helper'
-
 class TopicsControllerTest < ActionController::TestCase
   setup do
     @user = users(:one)
@@ -12,6 +10,13 @@ class TopicsControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 2, assigns(:topics).size
     assert assigns(:topics).all?{|topic| topic.user_id == @user.id }
+  end
+
+  test "should not get index without session" do
+    @request.session[:user_id] = nil
+
+    get :index
+    assert_redirected_to root_path
   end
 
   test "should get topics on index with user id related records" do
@@ -41,7 +46,7 @@ class TopicsControllerTest < ActionController::TestCase
       post :create, topic: { description: @topic.description, title: @topic.title }
     end
 
-    assert_redirected_to user_topics_path(@user)
+    assert_redirected_to user_topic_dailylogs_path(@user, Topic.last)
   end
 
   test "should not create topic with invalid params" do
@@ -60,7 +65,7 @@ class TopicsControllerTest < ActionController::TestCase
       post :create, topic: { description: @topic.description, title: @topic.title, user_id: another_user.id }
     end
 
-    assert_redirected_to user_topics_path(@user)
+    assert_redirected_to user_topic_dailylogs_path(@user, Topic.last)
 
     assert_not_equal another_user.id, Topic.last.user_id
     assert_equal @user.id, Topic.last.user_id end
@@ -84,7 +89,7 @@ class TopicsControllerTest < ActionController::TestCase
       patch :update, id: @topic, topic: { description: @topic.description, title: @topic.title }
     end
 
-    assert_redirected_to user_topics_path(@user)
+    assert_redirected_to user_topic_dailylogs_path(@user, @topic)
   end
 
   test "should ignore user_id on update topic" do
@@ -94,7 +99,7 @@ class TopicsControllerTest < ActionController::TestCase
       patch :update, id: @topic, topic: { description: @topic.description, title: @topic.title, user_id: another_user.id }
     end
 
-    assert_redirected_to user_topics_path(@user)
+    assert_redirected_to user_topic_dailylogs_path(@user, @topic)
     @topic.reload
     assert_not_equal another_user.id, @topic.user_id
     assert_equal @user.id, @topic.user_id

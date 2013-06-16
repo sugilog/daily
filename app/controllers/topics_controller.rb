@@ -17,7 +17,7 @@ class TopicsController < ApplicationController
     @topic = current_user.topics.new(topic_params)
 
     if @topic.save
-      redirect_to user_topics_path(current_user), notice: 'Topic was successfully created.'
+      redirect_to user_topic_dailylogs_path(current_user, @topic), notice: 'Topic was successfully created.'
     else
       render action: 'new'
     end
@@ -25,7 +25,7 @@ class TopicsController < ApplicationController
 
   def update
     if @topic.update(topic_params)
-      redirect_to user_topics_path(current_user), notice: 'Topic was successfully updated.'
+      redirect_to user_topic_dailylogs_path(current_user, @topic), notice: 'Topic was successfully updated.'
     else
       render action: 'edit'
     end

@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20130616015955) do
 
   create_table "dailylogs", force: true do |t|
-    t.date     "logged_on",  null: false
-    t.integer  "score"
+    t.date     "logged_on",                          null: false
+    t.decimal  "score",      precision: 7, scale: 2
     t.text     "memo"
-    t.integer  "topic_id",   null: false
+    t.integer  "topic_id",                           null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

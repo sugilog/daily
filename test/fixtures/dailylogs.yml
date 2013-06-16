@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  logged_on: 2013-06-16
-  score: 1
+  id: 1
+  logged_on: <%= Date.tomorrow.to_s(:db) %>
+  score: 36.5
   memo: MyText
   topic_id: 1
 
 two:
-  logged_on: 2013-06-16
-  score: 1
+  id: 2
+  logged_on: <%= Date.today.to_s(:db) %>
+  score: 36.3
   memo: MyText
   topic_id: 1

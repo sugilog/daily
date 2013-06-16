@@ -15,6 +15,7 @@
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                user_topics_path(current_user), :class => 'btn' %>
+                (@topic.new_record? ? user_topics_path(current_user) : user_topic_dailylogs_path(current_user, @topic)),
+                :class => 'btn' %>
   </div>
 <% end %>
