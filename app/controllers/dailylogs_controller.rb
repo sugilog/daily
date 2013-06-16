@@ -4,7 +4,7 @@ class DailylogsController < ApplicationController
   # before_action :set_dailylog, only: [:edit, :update, :destroy]
 
   def index
-    @dailylogs = @topic.dailylogs
+    @dailylogs = Dailylog.monthly(@topic, start_date)
   end
 
   private
@@ -20,4 +20,15 @@ class DailylogsController < ApplicationController
   # def dailylog_params
   #   params.require(:dailylog).permit(:logged_on, :score, :memo)
   # end
+
+  def start_date
+    @start_date ||=
+      if params[:year] && params[:month]
+        Date.new(params[:year], params[:month])
+      else
+        Date.today.beginning_of_month
+      end
+  end
+
+  helper_method :start_date
 end
