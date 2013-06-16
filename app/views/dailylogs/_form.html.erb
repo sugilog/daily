@@ -1,0 +1,27 @@
+<%= form_for @dailylog, url: user_topic_dailylog_path(current_user, @topic, @dailylog),  html: { class: 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :logged_on, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :logged_on, class: 'text_field', type: "date" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :score, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :score, class: 'text_field', type: "number", step: 0.1 %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :memo, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :memo, class: 'text_field' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, class: 'btn btn-primary' %>
+    <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                user_topic_dailylogs_path(current_user, @topic),
+                class: 'btn' %>
+  </div>
+<% end %>
