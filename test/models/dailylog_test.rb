@@ -36,4 +36,31 @@ class DailylogTest < ActiveSupport::TestCase
       assert dailylog.errors[:logged_on].any?
     end
   end
+
+  test "monthly without start date" do
+    dailylogs = Dailylog.monthly(@topic)
+
+    assert_equal Date.today.end_of_month.mday, dailylogs.size
+
+    (Date.today.beginning_of_month..Date.today.end_of_month).each do |date|
+      case date
+      when Date.today
+        assert_equal @dailylog, dailylogs[date]
+      when Date.tomorrow
+        assert_equal dailylogs(:two), dailylogs[date]
+      else
+        assert dailylogs[date].new_record?
+      end
+    end
+  end
+
+  test "monthly with start date" do
+    dailylogs = Dailylog.monthly(@topic, Date.new(2013, 1, 1))
+
+    assert_equal 31, dailylogs.size
+
+    dailylogs.each do |date, dailylog|
+      assert dailylog.new_record?
+    end
+  end
 end
