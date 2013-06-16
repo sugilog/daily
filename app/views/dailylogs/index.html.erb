@@ -59,10 +59,11 @@
   <li>
   <%= link_to link_path do %>
     <%=l date %>
-    <%= content_tag :span, dailylog.score, class: "badge" %>
+    <%= content_tag :span, dailylog.score, class: badge_class(dailylog.degree) %>
     <% if dailylog.memo.present? %>
       (<%= content_tag :small, (dailylog.memo) %>)
     <% end %>
+      (<%= content_tag :small, (dailylog.degree) %>)
   <% end %>
   </li>
   <% end %>
