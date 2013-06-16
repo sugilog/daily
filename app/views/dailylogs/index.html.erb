@@ -17,25 +17,37 @@
             :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
             :class => 'btn btn-danger' %>
 
-<br />
-<br />
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable(
+      <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| [date.mday, dailylog.score.to_i] } ).to_json %>
+    );
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data);
+  }
+</script>
+<div class="row">
+<div id="chart_div" class="span12" style="height: 300px;"></div>
+</div>
+
 
 <ul class="pager">
   <li class="previous">
-  <%= link_to user_topic_dailylogs_path(current_user, @topic, year: start_date.prev_month.year, month: start_date.prev_month.month) do %>
+  <%= link_to_without_turbolink user_topic_dailylogs_path(current_user, @topic, year: start_date.prev_month.year, month: start_date.prev_month.month) do %>
     &larr; Previous
   <% end %>
   </li>
   <li class="next">
-  <%= link_to user_topic_dailylogs_path(current_user, @topic, year: start_date.next_month.year, month: start_date.next_month.month) do %>
+  <%= link_to_without_turbolink user_topic_dailylogs_path(current_user, @topic, year: start_date.next_month.year, month: start_date.next_month.month) do %>
     Next &rarr;
   <% end %>
   </li>
 </ul>
 
-<br />
-
-<% unless @dailylogs.empty? %>
 <ul class="nav nav-tabs nav-stacked">
   <%
     @dailylogs.each do |date, dailylog|
@@ -54,18 +66,15 @@
   </li>
   <% end %>
 </ul>
-<% end %>
-
-<br />
 
 <ul class="pager">
   <li class="previous">
-  <%= link_to user_topic_dailylogs_path(current_user, @topic, year: start_date.prev_month.year, month: start_date.prev_month.month) do %>
+  <%= link_to_without_turbolink user_topic_dailylogs_path(current_user, @topic, year: start_date.prev_month.year, month: start_date.prev_month.month) do %>
     &larr; Previous
   <% end %>
   </li>
   <li class="next">
-  <%= link_to user_topic_dailylogs_path(current_user, @topic, year: start_date.next_month.year, month: start_date.next_month.month) do %>
+  <%= link_to_without_turbolink user_topic_dailylogs_path(current_user, @topic, year: start_date.next_month.year, month: start_date.next_month.month) do %>
     Next &rarr;
   <% end %>
   </li>

@@ -24,7 +24,7 @@ class DailylogsController < ApplicationController
   def start_date
     @start_date ||=
       if params[:year] && params[:month]
-        Date.new(params[:year], params[:month])
+        Date.new(params[:year].to_i, params[:month].to_i)
       else
         Date.today.beginning_of_month
       end
