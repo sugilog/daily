@@ -1,4 +1,6 @@
-<%= form_for @user, html: { class: 'form-horizontal' } do |f| %>
+<%= form_for @user,
+             url: (availables == [:password] ? {action: :update_password, id: @user} : user_path(@user)),
+             html: { class: 'form-horizontal' } do |f| %>
   <% if @user.errors.any? %>
     <div class='alert alert-error'>
       <ul>
@@ -9,18 +11,23 @@
     </div>
   <% end %>
 
+<% if availables.include?(:name) %>
   <div class="control-group">
     <%= f.label :name, class: 'control-label' %>
     <div class="controls">
       <%= f.text_field :name, class: 'text_field' %>
     </div>
   </div>
+<% end %>
+<% if availables.include?(:email) %>
   <div class="control-group">
     <%= f.label :email, class: 'control-label' %>
     <div class="controls">
       <%= f.text_field :email, class: 'text_field' %>
     </div>
   </div>
+<% end %>
+<% if availables.include?(:password) %>
   <div class="control-group">
     <%= f.label :password, class: 'control-label' %>
     <div class="controls">
@@ -33,6 +40,7 @@
       <%= f.password_field :password_confirmation, class: 'text_field' %>
     </div>
   </div>
+<% end %>
 
   <div class="form-actions">
     <%= f.submit nil, class: 'btn btn-primary' %>

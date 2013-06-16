@@ -58,7 +58,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_path
   end
 
-  test "should not destroy user unless login" do
+  test "should not destroy user without session" do
     @request.session[:user_id] = nil
 
     assert_no_difference('User.count') do
@@ -66,5 +66,48 @@ class UsersControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to root_path
+  end
+
+  test "get edit_password" do
+    @request.session[:user_id] = @user.id
+
+    get :edit_password, id: @user
+
+    assert_response :success
+    assert_template :edit_password
+  end
+
+  test "get edit_password without session" do
+    @request.session[:user_id] = nil
+    get :edit_password, id: @user
+
+    assert_redirected_to root_path
+  end
+
+  test "update password" do
+    @request.session[:user_id] = @user.id
+
+    patch :update_password, id: @user, user: {password: "123", password_confirmation: "123"}
+    assert_redirected_to user_path(@user)
+    @user.reload
+    assert @user.authenticate("123")
+  end
+
+  test "update password ignore another params" do
+    @request.session[:user_id] = @user.id
+
+    patch :update_password, id: @user, user: {password: "123", password_confirmation: "123", name: "hoge"}
+    assert_redirected_to user_path(@user)
+    @user.reload
+    assert_not_equal "hoge", @user.name
+  end
+
+  test "update password with invalid password" do
+    @request.session[:user_id] = @user.id
+
+    patch :update_password, id: @user, user: {password: "123", password_confirmation: "456"}
+    assert_response :success
+    assert_template :edit_password
+    assert @user.authenticate("password")
   end
 end
