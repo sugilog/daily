@@ -23,13 +23,14 @@
     chart.draw(data);
   }
   google.setOnLoadCallback(function() {
-    drawChart(chartData);
+    drawChart(chartData, chartOptions);
   });
   jQuery(window).on("resize", function() { drawChart(chartData); });
   jQuery(document).on("page:load", function() { drawChart(chartData); });
 </script>
 <script type="text/javascript">
-  var chartData = <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| dailylog.score ? [date, dailylog.score.to_i] : nil }.compact ).to_json %>;
+  var chartData = <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| dailylog.score ? [date, dailylog.score.to_f] : nil }.compact ).to_json %>;
+  var chartOptions = <%== {vAxis: {minValue: @dailylogs.map{|_, dailylog| dailylog.score }.compact.min.to_f, maxValue: @dailylogs.map{|_, dailylog| dailylog.score }.compact.max.to_f}}.to_json %>;
 </script>
 <div class="row">
 <div id="chart_div" class="span12" style="height: 200px;"></div>
