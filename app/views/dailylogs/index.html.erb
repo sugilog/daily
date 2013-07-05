@@ -17,20 +17,24 @@
             :class => 'btn btn-danger' %>
 
 <script type="text/javascript">
-  function drawChart(_data) {
+  function drawChart(_data, options) {
     var data = google.visualization.arrayToDataTable(_data);
     var chart = new google.visualization.LineChart(jQuery("#chart_div").get(0));
-    chart.draw(data);
+    chart.draw(data, options);
   }
   google.setOnLoadCallback(function() {
     drawChart(chartData, chartOptions);
   });
-  jQuery(window).on("resize", function() { drawChart(chartData); });
-  jQuery(document).on("page:load", function() { drawChart(chartData); });
+  jQuery(window).on("resize", function() { drawChart(chartData, chartOptions); });
+  jQuery(document).on("page:load", function() { drawChart(chartData, chartOptions); });
 </script>
+<%
+  chart_data   = @dailylogs.map{|date, dailylog| dailylog.score ? [date, dailylog.score.to_f] : nil }.compact.presence || [[start_date, 0]]
+  chart_values = @dailylogs.map{|_, dailylog| dailylog.score }.compact.presence || [0]
+%>
 <script type="text/javascript">
-  var chartData = <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| dailylog.score ? [date, dailylog.score.to_f] : nil }.compact ).to_json %>;
-  var chartOptions = <%== {vAxis: {minValue: @dailylogs.map{|_, dailylog| dailylog.score }.compact.min.to_f, maxValue: @dailylogs.map{|_, dailylog| dailylog.score }.compact.max.to_f}}.to_json %>;
+  var chartData = <%== ( [['day', 'score']] + chart_data ).to_json %>;
+  var chartOptions = <%== {pointSize: 5, vAxis: {minValue: chart_values.min.to_f, maxValue: chart_values.max.to_f}}.to_json %>;
 </script>
 <div class="row">
 <div id="chart_div" class="span12" style="height: 200px;"></div>
