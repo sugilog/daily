@@ -29,7 +29,7 @@
   jQuery(document).on("page:load", function() { drawChart(chartData); });
 </script>
 <script type="text/javascript">
-  var chartData = <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| [date.mday, dailylog.score.to_i] } ).to_json %>;
+  var chartData = <%== ( [['day', 'score']] + @dailylogs.map{|date, dailylog| dailylog.score ? [date, dailylog.score.to_i] : nil }.compact ).to_json %>;
 </script>
 <div class="row">
 <div id="chart_div" class="span12" style="height: 200px;"></div>
