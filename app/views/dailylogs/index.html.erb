@@ -18,7 +18,28 @@
 
 <script type="text/javascript">
   function drawChart(_data, options) {
-    var data = google.visualization.arrayToDataTable(_data);
+    // var data = google.visualization.arrayToDataTable(_data);
+    var rows = jQuery(_data).map(function() {
+      // adjust 0 for chat
+      var row = [{v: new Date(this.date + " 00:00:00"), f: this.date}];
+
+      if (typeof this.score !== "undefined") {
+        row.push({v: this.score});
+      }
+
+      return {c: row};
+    }).toArray();
+
+    var data = new google.visualization.DataTable(
+      {
+        cols: [
+          {id: 'date', label: 'Date', type: 'date'},
+          {id: 'score', label: 'Score', type: 'number'}
+        ],
+        rows: rows
+      }
+    );
+
     var chart = new google.visualization.LineChart(jQuery("#chart_div").get(0));
     chart.draw(data, options);
   }
@@ -29,12 +50,16 @@
   jQuery(document).on("page:load", function() { drawChart(chartData, chartOptions); });
 </script>
 <%
-  chart_data   = @dailylogs.map{|date, dailylog| dailylog.score ? [date, dailylog.score.to_f] : nil }.compact.presence || [[start_date, 0]]
-  chart_values = @dailylogs.map{|_, dailylog| dailylog.score }.compact.presence || [0]
+  chart_data   = @dailylogs.map{|date, dailylog|
+    dailylog.score ? {date: date, score: dailylog.score.to_f} : {date: date}
+  }
+  chart_values = @dailylogs.map{|_, dailylog|
+    dailylog.score
+  }.compact.presence || [0]
 %>
 <script type="text/javascript">
-  var chartData = <%== ( [['day', 'score']] + chart_data ).to_json %>;
-  var chartOptions = <%== {pointSize: 5, vAxis: {minValue: chart_values.min.to_f, maxValue: chart_values.max.to_f}}.to_json %>;
+  var chartData = <%== chart_data.to_json %>;
+  var chartOptions = <%== {interpolateNulls: true, pointSize: 5, vAxis: {minValue: chart_values.min.to_f, maxValue: chart_values.max.to_f}}.to_json %>;
 </script>
 <div class="row">
 <div id="chart_div" class="span12" style="height: 200px;"></div>
