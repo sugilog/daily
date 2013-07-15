@@ -21,7 +21,7 @@
     // var data = google.visualization.arrayToDataTable(_data);
     var rows = jQuery(_data).map(function() {
       // adjust 0 for chat
-      var row = [{v: new Date(this.date + " 00:00:00"), f: this.date}];
+      var row = [{v: new Date(this.date.replace(/-/g, "/") + " 00:00:00"), f: this.date}];
 
       if (typeof this.score !== "undefined") {
         row.push({v: this.score});
